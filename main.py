@@ -19,6 +19,13 @@ def get_all_subjects_details_by_student_id(id):
 
 
 # User (student) can see their exams (upcoming, failed, passed).
+# Ex: id = 1
+@app.route("/students/<int:id>/exams", methods=["GET"])
+def get_all_exams_by_student_id(id):
+    result = data_manager.get_all_exams_by_student_id(id)
+    return result
+
+
 # User (teacher) can see all the students they teach.
 # Ex: id = 1
 @app.route("/teachers/<int:id>/students", methods=["GET"])

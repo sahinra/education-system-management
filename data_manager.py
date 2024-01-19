@@ -39,3 +39,15 @@ def get_all_students_by_teacher_id(cursor, teacher_id):
     """)
     result = cursor.fetchall()
     return result
+
+
+@db_connection.handle_connection
+def get_all_exams_by_student_id(cursor, student_id):
+    cursor.execute(f"""
+        select er.student_id, s.student_name, er.exam_id, er.result_status
+        from exam_results er
+        join students s on s.student_id = er.student_id
+        where s.student_id = {student_id};
+    """)
+    result = cursor.fetchall()
+    return result
