@@ -47,6 +47,18 @@ create table exams(
     is_active boolean not null
 );
 
+create table exam_results (
+    result_id SERIAL PRIMARY KEY,
+    exam_id INT REFERENCES exams(exam_id),
+    student_id INT REFERENCES students(student_id),
+    result_status VARCHAR(20) NOT NULL, -- 'Passed', 'Failed', etc.
+    created_on TIMESTAMP NOT NULL,
+    created_by VARCHAR(20) NOT NULL,
+    modified_on TIMESTAMP NULL,
+    modified_by VARCHAR(20) NULL,
+    is_active BOOLEAN NOT NULL
+);
+
 create table subjects(
 	subject_id serial primary key,
 	exam_id int references exams(exam_id),
@@ -118,6 +130,13 @@ VALUES
     ('History Exam', '2024-03-15', CURRENT_TIMESTAMP, 'Admin2', NULL, NULL, true),
     ('Physics Exam', '2024-02-10', CURRENT_TIMESTAMP, 'Admin1', NULL, NULL, true),
     ('Database Exam', '2024-04-05', CURRENT_TIMESTAMP, 'Admin3', NULL, NULL, true);
+
+insert into exam_results (exam_id, student_id, result_status, created_on, created_by, is_active)
+values
+    (1, 1, 'Passed', CURRENT_TIMESTAMP, 'Admin1', true),
+    (2, 1, 'Failed', CURRENT_TIMESTAMP, 'Admin1', true),
+    (3, 2, 'Passed', CURRENT_TIMESTAMP, 'Admin2', true),
+    (4, 2, 'Failed', CURRENT_TIMESTAMP, 'Admin2', true);
 
 INSERT INTO subjects (exam_id, title, description, created_on, created_by, modified_on, modified_by, is_active)
 VALUES
