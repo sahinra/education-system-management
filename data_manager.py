@@ -51,3 +51,13 @@ def get_all_exams_by_student_id(cursor, student_id):
     """)
     result = cursor.fetchall()
     return result
+
+
+@db_connection.handle_connection
+def add_exams_by_teacher_id(cursor, title, teacher_id):
+    cursor.execute(f"""
+        insert into exams (title, exam_date, created_on, created_by, is_active)
+        values ('{title}', '2024-05-15 10:30:00', CURRENT_TIMESTAMP, 'Teacher{teacher_id}', true) returning exam_id
+    """)
+    result = cursor.fetchall()
+    return result
